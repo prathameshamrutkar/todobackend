@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
+require('dotenv').config();
 
 app.use(express.json());
 app.use(cors());
@@ -32,7 +33,6 @@ const Todo = mongoose.model("Todo", TodoSchema);
 
 app.get('/todo', async (req, res) => {
 	const todos = await Todo.find();
-	console.log(todos);
 	res.json(todos);
 });
 
@@ -41,13 +41,11 @@ app.post('/todo/new', (req, res) => {
 		text: req.body.text
 	})
 	todo.save();
-	console.log(todo);
 	res.json(todo);
 });
 
 app.delete('/todo/delete/:id', async (req, res) => {
 	const result = await Todo.findByIdAndDelete(req.params.id);
-	console.log(result);
 	res.json({result});
 });
 
